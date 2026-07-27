@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Tesseract from "tesseract.js";
 import AIExplanation from "../components/AIExplanation";
+import DrugInteraction from "../components/DrugInteraction";
 
 function Upload() {
   const [image, setImage] = useState(null);
@@ -79,6 +80,7 @@ function Upload() {
         </div>
       )}
      <AIExplanation text={text} /> 
+     <DrugInteraction text={text} />
     </div>
   );
 }
