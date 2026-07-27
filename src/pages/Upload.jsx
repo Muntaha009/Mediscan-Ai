@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Tesseract from "tesseract.js";
+import AIExplanation from "../components/AIExplanation";
 
 function Upload() {
   const [image, setImage] = useState(null);
@@ -71,6 +72,7 @@ function Upload() {
           </pre>
         </div>
       )}
+     <AIExplanation text={text} /> 
     </div>
   );
 }
