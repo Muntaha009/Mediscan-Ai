@@ -1,0 +1,38 @@
+.upload-box {
+  width: 90%;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 50px;
+  border: 3px dashed #2563eb;
+  border-radius: 20px;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+}
+
+.upload-box:hover {
+  transform: translateY(-5px);
+  border-color: #1d4ed8;
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.2);
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-icon {
+  font-size: 70px;
+  margin-bottom: 15px;
+}
+
+.upload-text {
+  font-size: 20px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.upload-text strong {
+  color: #2563eb;
+}

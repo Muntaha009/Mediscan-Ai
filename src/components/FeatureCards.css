@@ -1,0 +1,33 @@
+.features {
+  width: 90%;
+  max-width: 1200px;
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  width: 300px;
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+}
+
+.feature-card h2 {
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  color: #555;
+  line-height: 1.6;
+}

@@ -1,22 +1,25 @@
-
+import { useState, useEffect } from "react";
 import Tesseract from "tesseract.js";
+
+import UploadBox from "../components/UploadBox";
 import AIExplanation from "../components/AIExplanation";
 import DrugInteraction from "../components/DrugInteraction";
 import MedicineReminder from "../components/MedicineReminder";
 import PatientHistory from "../components/PatientHistory";
-import { useState, useEffect } from "react";
 
 function Upload() {
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-   const [history, setHistory] = useState(() => {
-  const savedHistory = localStorage.getItem("patientHistory");
-  return savedHistory ? JSON.parse(savedHistory) : [];
-});
-useEffect(() => {
-  localStorage.setItem("patientHistory", JSON.stringify(history));
-}, [history]);
+
+  const [history, setHistory] = useState(() => {
+    const savedHistory = localStorage.getItem("patientHistory");
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("patientHistory", JSON.stringify(history));
+  }, [history]);
 
   const handleImage = async (event) => {
     const file = event.target.files[0];
@@ -28,22 +31,25 @@ useEffect(() => {
 
     setLoading(true);
 
-    const result = await Tesseract.recognize(
-  file,
-  "eng",
-  {
-    logger: (m) => console.log(m),
-  }
-);
+    try {
+      const result = await Tesseract.recognize(file, "eng", {
+        logger: (m) => console.log(m),
+      });
 
-    setText(result.data.text);
-   setHistory((prev) => [
-  {
-    text: result.data.text,
-    date: new Date().toLocaleString(),
-  },
-  ...prev,
-]); 
+      setText(result.data.text);
+
+      setHistory((prev) => [
+        {
+          text: result.data.text,
+          date: new Date().toLocaleString(),
+        },
+        ...prev,
+      ]);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to read prescription.");
+    }
+
     setLoading(false);
   };
 
@@ -51,11 +57,7 @@ useEffect(() => {
     <div style={{ textAlign: "center", marginTop: "40px" }}>
       <h2>Upload Your Prescription</h2>
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImage}
-      />
+      <UploadBox handleImage={handleImage} />
 
       {image && (
         <div style={{ marginTop: "20px" }}>
@@ -65,7 +67,10 @@ useEffect(() => {
             src={image}
             alt="Prescription"
             width="300"
-            style={{ border: "2px solid #ccc", borderRadius: "10px" }}
+            style={{
+              border: "2px solid #ccc",
+              borderRadius: "10px",
+            }}
           />
         </div>
       )}
@@ -96,10 +101,14 @@ useEffect(() => {
           </pre>
         </div>
       )}
-     <AIExplanation text={text} /> 
-     <DrugInteraction text={text} />
-     <MedicineReminder />
-     <PatientHistory history={history} />
+
+      <AIExplanation text={text} />
+
+      <DrugInteraction text={text} />
+
+      <MedicineReminder />
+
+      <PatientHistory history={history} />
     </div>
   );
 }
