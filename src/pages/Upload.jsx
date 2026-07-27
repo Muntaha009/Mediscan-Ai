@@ -1,13 +1,22 @@
-import { useState } from "react";
+
 import Tesseract from "tesseract.js";
 import AIExplanation from "../components/AIExplanation";
 import DrugInteraction from "../components/DrugInteraction";
 import MedicineReminder from "../components/MedicineReminder";
+import PatientHistory from "../components/PatientHistory";
+import { useState, useEffect } from "react";
 
 function Upload() {
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
+   const [history, setHistory] = useState(() => {
+  const savedHistory = localStorage.getItem("patientHistory");
+  return savedHistory ? JSON.parse(savedHistory) : [];
+});
+useEffect(() => {
+  localStorage.setItem("patientHistory", JSON.stringify(history));
+}, [history]);
 
   const handleImage = async (event) => {
     const file = event.target.files[0];
@@ -28,6 +37,13 @@ function Upload() {
 );
 
     setText(result.data.text);
+   setHistory((prev) => [
+  {
+    text: result.data.text,
+    date: new Date().toLocaleString(),
+  },
+  ...prev,
+]); 
     setLoading(false);
   };
 
@@ -83,6 +99,7 @@ function Upload() {
      <AIExplanation text={text} /> 
      <DrugInteraction text={text} />
      <MedicineReminder />
+     <PatientHistory history={history} />
     </div>
   );
 }
