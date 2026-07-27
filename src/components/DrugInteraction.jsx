@@ -1,3 +1,4 @@
+import Card from "./Card";
 function DrugInteraction({ text }) {
   if (!text) return null;
 
@@ -22,24 +23,14 @@ function DrugInteraction({ text }) {
   }
 
   return (
-    <div
-      style={{
-        marginTop: "20px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        background: "#fff8e1",
-      }}
-    >
-      <h2>⚠️ Drug Interaction Checker</h2>
+  <Card title="⚠️ Drug Interaction Checker">
+    <p>{message}</p>
 
-      <p>{message}</p>
-
-      <p style={{ color: "red", fontWeight: "bold" }}>
-        This is an educational demonstration and should not replace professional medical advice.
-      </p>
-    </div>
-  );
+    <p style={{ color: "red", fontWeight: "bold" }}>
+      Educational purpose only.
+    </p>
+  </Card>
+);
 }
 
 export default DrugInteraction;

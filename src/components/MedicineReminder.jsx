@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Card from "./Card";
 function MedicineReminder() {
   const [medicine, setMedicine] = useState("");
   const [time, setTime] = useState("");
@@ -20,16 +20,8 @@ function MedicineReminder() {
     setTime("");
   };
 
-  return (
-    <div
-      style={{
-        marginTop: "30px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        background: "#f0fff4",
-      }}
-    >
+ return (
+  <Card title="💊 Medicine Reminder">
       <h2>💊 Medicine Reminder</h2>
 
       <input
@@ -64,7 +56,7 @@ function MedicineReminder() {
           </li>
         ))}
       </ul>
-    </div>
+    </Card>
   );
 }
 

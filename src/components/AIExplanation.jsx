@@ -1,3 +1,4 @@
+import Card from "./Card";
 function AIExplanation({ text }) {
   if (!text) return null;
 
@@ -24,35 +25,25 @@ function AIExplanation({ text }) {
   }
 
   return (
-    <div
-      style={{
-        marginTop: "30px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        background: "#eef7ff",
-      }}
-    >
-      <h2>🤖 AI Medicine Analysis</h2>
+  <Card title="🤖 AI Medicine Analysis">
+    {medicines.length > 0 ? (
+      <ul>
+        {medicines.map((medicine, index) => (
+          <li key={index}>{medicine}</li>
+        ))}
+      </ul>
+    ) : (
+      <p>No recognized medicine names were found in the extracted text.</p>
+    )}
 
-      {medicines.length > 0 ? (
-        <ul>
-          {medicines.map((medicine, index) => (
-            <li key={index}>{medicine}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No recognized medicine names were found in the extracted text.</p>
-      )}
+    <hr />
 
-      <hr />
-
-      <p style={{ color: "red", fontWeight: "bold" }}>
-        ⚠️ This information is for educational purposes only and is not a
-        substitute for professional medical advice.
-      </p>
-    </div>
-  );
+    <p style={{ color: "red", fontWeight: "bold" }}>
+      ⚠️ This information is for educational purposes only and is not a
+      substitute for professional medical advice.
+    </p>
+  </Card>
+);
 }
 
 export default AIExplanation;
