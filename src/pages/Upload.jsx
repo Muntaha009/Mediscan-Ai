@@ -17,7 +17,13 @@ function Upload() {
 
     setLoading(true);
 
-    const result = await Tesseract.recognize(file, "eng");
+    const result = await Tesseract.recognize(
+  file,
+  "eng",
+  {
+    logger: (m) => console.log(m),
+  }
+);
 
     setText(result.data.text);
     setLoading(false);

@@ -1,6 +1,28 @@
 function AIExplanation({ text }) {
   if (!text) return null;
 
+  const lowerText = text.toLowerCase();
+
+  const medicines = [];
+
+  if (lowerText.includes("paracetamol")) {
+    medicines.push(
+      "💊 Paracetamol: Commonly used to reduce fever and relieve mild to moderate pain."
+    );
+  }
+
+  if (lowerText.includes("amoxicillin")) {
+    medicines.push(
+      "💊 Amoxicillin: An antibiotic commonly prescribed to treat bacterial infections."
+    );
+  }
+
+  if (lowerText.includes("cetirizine")) {
+    medicines.push(
+      "💊 Cetirizine: Often used to relieve allergy symptoms such as sneezing and itching."
+    );
+  }
+
   return (
     <div
       style={{
@@ -11,25 +33,23 @@ function AIExplanation({ text }) {
         background: "#eef7ff",
       }}
     >
-      <h2>🤖 AI Explanation</h2>
+      <h2>🤖 AI Medicine Analysis</h2>
 
-      <p><strong>Extracted Prescription:</strong></p>
-
-      <p>{text}</p>
+      {medicines.length > 0 ? (
+        <ul>
+          {medicines.map((medicine, index) => (
+            <li key={index}>{medicine}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No recognized medicine names were found in the extracted text.</p>
+      )}
 
       <hr />
 
-      <h3>General Analysis</h3>
-
-      <ul>
-        <li>✅ Prescription text has been detected successfully.</li>
-        <li>💊 The prescription may contain one or more medicines.</li>
-        <li>📖 Please verify medicine names with your doctor or pharmacist.</li>
-        <li>⚠️ Never change the prescribed dosage without medical advice.</li>
-      </ul>
-
       <p style={{ color: "red", fontWeight: "bold" }}>
-        Educational purpose only. This is not a medical diagnosis.
+        ⚠️ This information is for educational purposes only and is not a
+        substitute for professional medical advice.
       </p>
     </div>
   );
