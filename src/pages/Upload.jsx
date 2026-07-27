@@ -1,14 +1,25 @@
 import { useState } from "react";
+import Tesseract from "tesseract.js";
 
 function Upload() {
   const [image, setImage] = useState(null);
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleImage = (event) => {
+  const handleImage = async (event) => {
     const file = event.target.files[0];
 
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
+    if (!file) return;
+
+    const imageURL = URL.createObjectURL(file);
+    setImage(imageURL);
+
+    setLoading(true);
+
+    const result = await Tesseract.recognize(file, "eng");
+
+    setText(result.data.text);
+    setLoading(false);
   };
 
   return (
@@ -31,6 +42,33 @@ function Upload() {
             width="300"
             style={{ border: "2px solid #ccc", borderRadius: "10px" }}
           />
+        </div>
+      )}
+
+      {loading && (
+        <p style={{ marginTop: "20px" }}>
+          🔍 Reading prescription...
+        </p>
+      )}
+
+      {text && (
+        <div
+          style={{
+            marginTop: "20px",
+            textAlign: "left",
+            width: "80%",
+            marginInline: "auto",
+            border: "1px solid #ccc",
+            padding: "15px",
+            borderRadius: "10px",
+            background: "#f8f8f8",
+          }}
+        >
+          <h3>Extracted Text</h3>
+
+          <pre style={{ whiteSpace: "pre-wrap" }}>
+            {text}
+          </pre>
         </div>
       )}
     </div>
